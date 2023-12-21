@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom CSS Animations on Scroll</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 2em;
+      opacity: 0;
+      transition: opacity 1s ease; /* Add a transition effect */
+    }
+
+    /* CSS animation styles */
+    .fade-in {
+      opacity: 1;
+    }
+
+    .slide-in {
+      transform: translateY(0);
+    }
+
+    .rotate-in {
+      transform: rotate(0);
+    }
+  </style>
+</head>
+<body>
+  <section class="animate-on-scroll fade-in" data-animation="fade-in">
+    Element 1
+  </section>
+
+  <section class="animate-on-scroll slide-in" data-animation="slide-in">
+    Element 2
+  </section>
+
+  <section class="animate-on-scroll rotate-in" data-animation="rotate-in">
+    Element 3
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
+
+      function checkScroll() {
+        elementsToAnimate.forEach((element) => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenHeight = window.innerHeight;
+
+          if (elementPosition < screenHeight) {
+            element.classList.add(element.dataset.animation);
+          }
+        });
+      }
+
+      // Initial check on page load
+      checkScroll();
+
+      // Listen for scroll events
+      window.addEventListener('scroll', checkScroll);
+    });
+  </script>
+</body>
+</html>

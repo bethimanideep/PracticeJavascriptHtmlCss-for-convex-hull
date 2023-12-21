@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Sortable List</title>
+    <style>
+      #sortableList {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px;
+      }
+
+      #sortableList li {
+        background-color: #f4f4f4;
+        padding: 10px;
+        margin: 5px 0;
+        cursor: grab;
+      }
+
+      #sortableList li.dragging {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="sortableList">
+      <li draggable="true">Item 1</li>
+      <li draggable="true">Item 2</li>
+      <li draggable="true">Item 3</li>
+      <li draggable="true">Item 4</li>
+      <li draggable="true">Item 5</li>
+    </ul>
+    <script src="script.js"></script>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const list = document.getElementById("sortableList");
+      let draggedItem = null;
+
+      // Event listener for when dragging starts
+      list.addEventListener("dragstart", function (e) {
+        draggedItem = e.target;
+        draggedItem.classList.add("dragging"); // Add the 'dragging' class
+        setTimeout(function () {
+          draggedItem.style.display = "none";
+        }, 0);
+      });
+
+      // Event listener for when dragging ends
+      list.addEventListener("dragend", function () {
+        setTimeout(function () {
+          if (draggedItem) {
+            draggedItem.style.display = "block";
+            draggedItem.classList.remove("dragging"); // Remove the 'dragging' class
+            draggedItem = null;
+          }
+        }, 0);
+      });
+
+      // Event listeners for the drop zones
+      list.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(list, e.clientY);
+        const draggable = document.querySelector(".dragging");
+        if (afterElement == null) {
+          list.appendChild(draggable);
+        } else {
+          list.insertBefore(draggable, afterElement);
+        }
+      });
+
+      // Helper function to determine the position to insert the dragged item
+      function getDragAfterElement(container, y) {
+        const draggableElements = [
+          ...container.querySelectorAll("li:not(.dragging)"),
+        ];
+
+        return draggableElements.reduce(
+          (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+              return { offset: offset, element: child };
+            } else {
+              return closest;
+            }
+          },
+          { offset: Number.NEGATIVE_INFINITY }
+        ).element;
+      }
+    });
+  </script>
+</html>

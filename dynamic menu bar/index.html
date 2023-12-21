@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <title>Dynamic Navigation Menu</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #dynamicMenu {
+        display: flex;
+        background-color: #333;
+        padding: 10px;
+      }
+
+      #dynamicMenu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      #dynamicMenu a:hover {
+        background-color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="dynamicMenu">
+      <!-- Menu items will be dynamically populated here -->
+    </nav>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuContainer = document.getElementById("dynamicMenu");
+
+      // Sample data for menu items
+      const sampleMenuItems = [
+        { url: "#home", label: "Home" },
+        { url: "#about", label: "About Us" },
+        { url: "#services", label: "Services" },
+        { url: "#contact", label: "Contact Us" },
+      ];
+
+      // Populate the menu dynamically
+      sampleMenuItems.forEach((item) => {
+        const menuItem = document.createElement("a");
+        menuItem.href = item.url;
+        menuItem.textContent = item.label;
+        menuContainer.appendChild(menuItem);
+      });
+    });
+  </script>
+</html>

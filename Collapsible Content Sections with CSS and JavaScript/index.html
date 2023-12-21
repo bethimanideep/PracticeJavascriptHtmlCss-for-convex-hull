@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Sections</title>
+    <style>
+        .section {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+}
+
+.section-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 8px;
+}
+
+.section-content {
+    display: none;
+    padding: 10px;
+}
+
+.section.active .section-content {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('section1')">
+            <h2>Section 1</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content" id="section1">
+            <p>This is the content of section 1.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header" onclick="toggleSection('section2')">
+            <h2>Section 2</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content" id="section2">
+            <p>This is the content of section 2.</p>
+        </div>
+    </div>
+
+</body>
+<script>
+    function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.parentElement.classList.toggle('active');
+}
+
+</script>
+</html>
